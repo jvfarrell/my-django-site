@@ -1,0 +1,157 @@
+{% extends "base_site.html" %}
+
+{% block title %}Resume{% endblock %}
+{% block navbar %}
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-blue w3-card-2 w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-blue" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="/home/" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Home</a>
+    <a href="/resume/" class="w3-bar-item w3-button w3-padding-large w3-white">Resume</a>
+    <a href="/summoner/" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Summoner Lookup</a>
+    <a href="/home/#quote" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Quote Generator</a>
+    <a href="/nfl/" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">NFL Analytics</a>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="/resume/" class="w3-bar-item w3-button w3-padding-large">Resume</a>
+    <a href="/summoner/" class="w3-bar-item w3-button w3-padding-large">Summoner Lookup</a>
+    <a href="/home/#quote" class="w3-bar-item w3-button w3-padding-large">Quote Generator</a>
+    <a href="/nfl/" class="w3-bar-item w3-button w3-padding-large">NFL Analytics</a>
+  </div>
+</div>
+{% endblock %}
+{% block content %}
+<body class="w3-light-grey">
+
+<!-- Page Container -->
+<div class="w3-content w3-margin-top" style="max-width:1400px;">
+
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+
+    <!-- Left Column -->
+    <div class="w3-third">
+
+      <div class="w3-white w3-text-grey w3-card-4">
+        <div class="w3-display-container">
+          <img src="/static/resume_edited_blue.png" style="width:100%" alt="Avatar">
+          <div class="w3-display-bottomleft w3-container w3-text-white">
+            <h2>J Victor Farrell</h2>
+          </div>
+        </div>
+        <div class="w3-container">
+          <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-blue"></i>Technical Consultant</p>
+          <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-blue"></i>Arlington, VA</p>
+          <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-blue"></i>jvictorfarrell@gmail.com</p>
+          <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-blue"></i>703-939-1768</p>
+          <hr>
+
+          <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-blue"></i>Skills</b></p>
+          <p>Java</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-blue" style="width:90%">90%</div>
+          </div>
+          <p>Python</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-blue" style="width:80%">
+              <div class="w3-center w3-text-white">80%</div>
+            </div>
+          </div>
+          <p>Agile Scrum</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-blue" style="width:75%">75%</div>
+          </div>
+          <p>SQL</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-blue" style="width:50%">50%</div>
+          </div>
+          <br>
+
+          <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-text-blue"></i>Role</b></p>
+          <p>Java Developer</p>
+          <div class="w3-light-grey w3-round-xlarge">
+            <div class="w3-round-xlarge w3-blue" style="height:24px;width:100%"></div>
+          </div>
+          <p>Analyst</p>
+          <div class="w3-light-grey w3-round-xlarge">
+            <div class="w3-round-xlarge w3-blue" style="height:24px;width:55%"></div>
+          </div>
+          <p>Mobile Developer</p>
+          <div class="w3-light-grey w3-round-xlarge">
+            <div class="w3-round-xlarge w3-blue" style="height:24px;width:50%"></div>
+          </div>
+          <br>
+        </div>
+      </div><br>
+
+    <!-- End Left Column -->
+    </div>
+
+    <!-- Right Column -->
+    <div class="w3-twothird">
+
+      <div class="w3-container w3-card-2 w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>Work Experience</h2>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>Technical Consultant / Ventera</b></h5>
+          <h6 class="w3-text-blue"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Aug 2016 - <span class="w3-tag w3-blue w3-round">Current</span></h6>
+          <p>From August to April I worked on the FNS (Food and Nutrition Service) project as an Application Developer,
+              mainly working in Java and Angular JS.  On the side I was working on Data Analytics in Jupyter analyzing
+              NFL and League of Legends data. I have been teaching co-workers several of those tools and skills.<br><br>
+              Since April I have been working on the CMS (Centers for Medicare and Medicaid Services) contract
+              as a developer.</p>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>Software Engineering Development Program / Genworth Financial</b></h5>
+          <h6 class="w3-text-blue"><i class="fa fa-calendar fa-fw w3-margin-right"></i>July 2014 - Aug 2016</h6>
+          <p>Two year rotational program. Worked on a new team in a new role every six months.</p>
+            <p>
+                <b>1st Rotation:</b> Front end web development. I created a JavaScript webpage to test web load times across
+                    GNW. Used: AngularJS, JavaScript, HTML, CSS, Java, Velocity.<br><br>
+                <b>2nd Rotation:</b> iOS mobile development. Worked on producer iOS app. Added touch ID authentication.
+                    Created dashboard for LTC sellers to view their book of business. Added on-boarding process to app and
+                    created unique loading compass for GNW. Used: Objective-C, Swift, Xcode, Agile Environment.<br><br>
+                <b>3rd Rotation:</b> Back-end development team. Created new web service. Added Zuul gateway service to
+                    dynamically route requests from mobile app. Created test data. Enabled app testing for Apple by routing
+                    their requests through Zuul. Used: Java, AngularJS, Maven, XML (making WSDL), Jenkins.<br><br>
+                <b>4th Rotation:</b> Data Science team. Created Python API for accessing Health Indicators Warehouse data (Govt.
+                    data). Analyzed Alzheimer’s disease data. Querying GNW databases to analyze claims data over time.
+                    Used: Python, SQL, Jupyter
+            </p>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>Internship / Genworth Financial</b></h5>
+          <h6 class="w3-text-blue"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Jun 2013 - Aug 2013</h6>
+          <p>Automated testing of new print generation management system at Genworth. Used: HP UFT, VB script</p><br>
+        </div>
+      </div>
+
+      <div class="w3-container w3-card-2 w3-white">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>Education</h2>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>College of William & Mary</b></h5>
+          <h6 class="w3-text-blue"><i class="fa fa-calendar fa-fw w3-margin-right"></i>2010-2014</h6>
+          <p>BS in Computer Science. <br>Minor in Process Management & Consulting</p>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>Activities</b></h5>
+          <p>Lab Consultant, Orientation Aide, Orientation Aide Director, Hip Hop Dance team, Snowboarding club.
+          </p>
+          <hr>
+        </div>
+      </div>
+
+    <!-- End Right Column -->
+    </div>
+
+  <!-- End Grid -->
+  </div>
+
+  <!-- End Page Container -->
+</div>
+{% endblock %}

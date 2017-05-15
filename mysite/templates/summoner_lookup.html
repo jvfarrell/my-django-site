@@ -1,0 +1,100 @@
+{% extends "base_site.html" %}
+{% block navbar %}
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-blue w3-card-2 w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-blue" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="/home/" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Home</a>
+    <a href="/resume/" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Resume</a>
+    <a href="/summoner/" class="w3-bar-item w3-button w3-padding-large w3-white">Summoner Lookup</a>
+    <a href="/home/#quote" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Quote Generator</a>
+    <a href="/nfl/" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">NFL Analytics</a>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="/resume/" class="w3-bar-item w3-button w3-padding-large">Resume</a>
+    <a href="/summoner/" class="w3-bar-item w3-button w3-padding-large">Summoner Lookup</a>
+    <a href="/home/#quote" class="w3-bar-item w3-button w3-padding-large">Quote Generator</a>
+    <a href="/nfl/" class="w3-bar-item w3-button w3-padding-large">NFL Analytics</a>
+  </div>
+</div>
+{% endblock %}
+{% block title %}Summoner Lookup{% endblock %}
+{% block header %}
+<header class="w3-container w3-light-gray w3-center" style="padding:60px 16px">
+
+    <script type="text/javascript">
+        function lookup() {
+            var name = document.getElementById('summoner_name').value;
+            window.location = "http://127.0.0.1:8000/summoner/" + name;
+        }
+    </script>
+
+    <center>
+        <form action="" method="post" onsubmit="move()">
+            <label for="summoner_name">Summoner Name:</label>
+            {{ form.summoner_name }}
+            <input type="submit" value="Submit" onclick="move()"/>
+            {% csrf_token %}
+        </form>
+    </center>
+        <div class="w3-container">
+          <div class="w3-light-gray">
+            <div id="myBar" class="w3-orange" style="height:24px;width:0"></div>
+          </div>
+          <br>
+        </div>
+    <script>
+    function move() {
+      var elem = document.getElementById("myBar");
+      var width = 1;
+      var id = setInterval(frame, 30);
+      function frame() {
+        if (width >= 100) {
+          clearInterval(id);
+        } else {
+          width++;
+          elem.style.width = width + '%';
+        }
+      }
+    }
+    </script>
+
+    <div class="w3-row-padding w3-padding-48 w3-theme-l1">
+
+        <div class="w3-col" style="width:16%">
+            <img src="{{ icon_url }}" alt="Summoner Icon">
+        <h2>{{ summoner_name }}</h2>
+        <p>{{ rank }}</p>
+        </div>
+
+        {% if champ_list %}
+                {% for champ in champ_list %}
+        <div class="w3-col" style="width:16%">
+        <div class="w3-card-2 w3-white">
+          <img src="{{champ.champ_url}}" alt="{{ champ.name }} Icon" style="width:100%">
+            {% if champ.mastery > 4 %}
+            <div>
+                <img border="0" src="/static/champMastery/lvl{{ champ.mastery }}-Flag2.png"
+                 alt="level {{ champ.mastery }}">
+            </div>
+            {% endif %}
+          <div class="w3-container">
+          <h3>{{ champ.name }}</h3>
+              <p>KDA : {{ champ.kda }}</p>
+              <p>Win Ratio: {{ champ.win_ratio }}</p>
+              <p>Games Played: {{ champ.games_played }} </p>
+              <p>Mastery Lvl: {{ champ.mastery }}</p>
+          </div>
+          </div>
+        </div>
+                {% endfor %}
+        {% else %}
+            There are no ranked games for this summoner.
+        {% endif %}
+
+    </div>
+</header>
+
+{% endblock %}

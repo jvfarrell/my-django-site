@@ -1,0 +1,70 @@
+{% extends "base_site.html" %}
+
+{% block title %}Summoner Lookup{% endblock %}
+{% block navbar %}
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-blue w3-card-2 w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-blue" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="/home/" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Home</a>
+    <a href="/resume/" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Resume</a>
+    <a href="/summoner/" class="w3-bar-item w3-button w3-padding-large w3-white">Summoner Lookup</a>
+    <a href="/home/#quote" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Quote Generator</a>
+    <a href="/nfl/" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">NFL Analytics</a>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="/resume/" class="w3-bar-item w3-button w3-padding-large">Resume</a>
+    <a href="/summoner/" class="w3-bar-item w3-button w3-padding-large">Summoner Lookup</a>
+    <a href="/home/#quote" class="w3-bar-item w3-button w3-padding-large">Quote Generator</a>
+    <a href="/nfl/" class="w3-bar-item w3-button w3-padding-large">NFL Analytics</a>
+  </div>
+</div>
+{% endblock %}
+{% block header %}
+<header class="w3-container w3-light-gray w3-center" style="padding:15% 16px">
+    <h1 class="w3-xxxlarge w3-text-blue" style="centered=true"><b>League of Legends Profile</b></h1>
+    <script type="text/javascript">
+        function lookup() {
+            var name = document.getElementById('summoner_name').value;
+            window.location = "http://127.0.0.1:8000/summoner/" + name;
+        }
+    </script>
+
+    <center>
+        <form action="" method="post" onsubmit="move()">
+            <label for="summoner_name">Summoner Name:</label>
+            {{ form.summoner_name }}
+            <input type="submit" value="Submit" onclick="move()"/>
+            {% csrf_token %}
+        </form>
+    </center>
+    <br>
+        <div class="w3-container">
+          <div class="w3-light-gray">
+            <div id="myBar" class="w3-orange" style="height:24px;width:0"></div>
+          </div>
+          <br>
+        </div>
+
+    <script>
+    function move() {
+      var elem = document.getElementById("myBar");
+      var width = 1;
+      var id = setInterval(frame, 30);
+      function frame() {
+        if (width >= 100) {
+          clearInterval(id);
+        } else {
+          width++;
+          elem.style.width = width + '%';
+        }
+      }
+    }
+    </script>
+</header>
+
+
+
+{% endblock %}
