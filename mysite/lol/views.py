@@ -82,10 +82,10 @@ def summoner(request, sum_name):
         form = SummonerForm(
             initial={'summoner_name': name}
         )
-        plain_name = name.replace('+', ' ')
+        plain_name = name.replace(' ', '')
         key = config.api_key #api key
-        name_requested_formatted = name.replace('+', '%20')
-        url = 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + name_requested_formatted + '?api_key=' + key
+        #name_requested_formatted = name.replace('+', '%20')
+        url = 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + plain_name + '?api_key=' + key
         response = requests.get(url)
         data = response.json()
 
@@ -145,5 +145,5 @@ def summoner(request, sum_name):
                              'mastery': mastery, 'champ_url': champ_url}
                 champ_list.append(list_item)
 
-        return render(request, 'summoner_lookup.html', {'summoner_name': plain_name, 'rank': textRank, 'icon_url': icon_url,
+        return render(request, 'summoner_lookup.html', {'summoner_name': sum_name, 'rank': textRank, 'icon_url': icon_url,
                                                         'champ_list': champ_list, 'form': form})

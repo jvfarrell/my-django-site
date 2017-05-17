@@ -23,6 +23,27 @@
 </div>
 {% endblock %}
 {% block header %}
+<style>
+.loader {
+  border: 8px solid #4d94ff;
+  border-radius: 50%;
+  border-top: 8px solid #ff9900;
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
 <header class="w3-container w3-light-gray w3-center" style="padding:15% 16px">
     <h1 class="w3-xxxlarge w3-text-blue" style="centered=true"><b>League of Legends Profile</b></h1>
     <script type="text/javascript">
@@ -41,26 +62,29 @@
         </form>
     </center>
     <br>
-        <div class="w3-container">
+        <center><div id="loading_wheel" class="loader" style="display:none"></div></center>
+        <!--<div class="w3-container">
           <div class="w3-light-gray">
             <div id="myBar" class="w3-orange" style="height:24px;width:0"></div>
           </div>
           <br>
-        </div>
+        </div>-->
 
     <script>
     function move() {
-      var elem = document.getElementById("myBar");
-      var width = 1;
-      var id = setInterval(frame, 30);
-      function frame() {
-        if (width >= 100) {
-          clearInterval(id);
-        } else {
-          width++;
-          elem.style.width = width + '%';
-        }
-      }
+      document.getElementById("loading_wheel").style.display = "block";
+
+      //var elem = document.getElementById("myBar");
+      //var width = 1;
+      //var id = setInterval(frame, 30);
+      //function frame() {
+      //  if (width >= 100) {
+      //    clearInterval(id);
+      //  } else {
+      //    width++;
+      //    elem.style.width = width + '%';
+      //  }
+      //}
     }
     </script>
 </header>
