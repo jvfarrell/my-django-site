@@ -4,6 +4,7 @@ from mysite.forms import ContactForm, SummonerForm
 from django.core.mail import send_mail
 import datetime, requests, json, random, os
 import mysite.quotes
+import lol.api_config as config
 
 import datetime
 
@@ -60,7 +61,7 @@ def contact(request):
                 cd['subject'],
                 cd['message'],
                 cd.get('email', 'noreply@example.com'),
-                ['siteowner@example.com'],
+                ['jvictorfarrell@gmail.com'],
             )
             return HttpResponseRedirect('/contact/thanks/')
     else:
@@ -74,7 +75,7 @@ def summoner(request):
         form = SummonerForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            key = '98d64dad-53c8-43e0-b947-aaee85100403'
+            key = config.api_key
             cd['summoner_name']
             nameRequestedFormatted = cd['summoner_name'].replace(' ', '%20')
             url = 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + nameRequestedFormatted + '?api_key=' + key

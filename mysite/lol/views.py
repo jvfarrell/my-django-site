@@ -4,12 +4,13 @@ from lol.models import Summoner, Stats, Champion
 from mysite.forms import SummonerForm
 import requests, json
 import pandas as pd
+import lol.api_config as config
 
 # Set up code
 
 #champion info names
-key = '98d64dad-53c8-43e0-b947-aaee85100403'
-url_champ_info = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=98d64dad-53c8-43e0-b947-aaee85100403'
+key = config.api_key
+url_champ_info = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key='+key
 championInfo = requests.get(url_champ_info)
 champ_dict = {}
 for champion in championInfo.json()['data']:
@@ -82,7 +83,7 @@ def summoner(request, sum_name):
             initial={'summoner_name': name}
         )
         plain_name = name.replace('+', ' ')
-        key = '98d64dad-53c8-43e0-b947-aaee85100403' #api key
+        key = config.api_key #api key
         name_requested_formatted = name.replace('+', '%20')
         url = 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + name_requested_formatted + '?api_key=' + key
         response = requests.get(url)
