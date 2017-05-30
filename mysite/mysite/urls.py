@@ -21,7 +21,7 @@ from lol import views as lolview
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', my_homepage_view),
+    url(r'^$', home),
     url(r'^hello/$', hello),
     url(r'^resume/$', resume),
     url(r'^home/$', home),

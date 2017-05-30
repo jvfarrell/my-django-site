@@ -16,6 +16,9 @@ champ_dict = {}
 for champion in championInfo.json()['data']:
     champ_dict[championInfo.json()['data'][champion]['id']] = championInfo.json()['data'][champion]['name']
 
+version_url = 'https://global.api.riotgames.com/api/lol/static-data/NA/v1.2/versions?api_key='+key
+versions = requests.get(version_url)
+version = versions.json()[0]
 
 def getChampSimpleName(champID):
     return champ_dict[champID].lower().replace(' ', '').replace('\'', '').replace('.','')
@@ -96,7 +99,7 @@ def summoner(request, sum_name):
         sumID = data[sumName]['id']
         icon_id = data[sumName]['profileIconId']
         sumID = str(sumID)
-        icon_url = 'http://ddragon.leagueoflegends.com/cdn/7.9.1/img/profileicon/'+str(icon_id)+'.png'
+        icon_url = 'http://ddragon.leagueoflegends.com/cdn/'+version+'/img/profileicon/'+str(icon_id)+'.png'
 
         # Get summoner Rank
         url = 'https://na.api.pvp.net/api/lol/na/v2.5/league/by-summoner/' + sumID + '?api_key=' + key
@@ -140,7 +143,7 @@ def summoner(request, sum_name):
                 kda = top_champs.T[c].KDA
                 win_ratio = '{percent:.1%}'.format(percent=top_champs.T[c].winRatio)
                 mastery = getSummonerChampLevel(c, sumID)
-                champ_url = 'http://ddragon.leagueoflegends.com/cdn/7.9.1/img/champion/'+name+'.png'
+                champ_url = 'http://ddragon.leagueoflegends.com/cdn/'+version+'/img/champion/'+name+'.png'
                 list_item = {'name': name, 'games_played': games_played, 'kda': kda, 'win_ratio': win_ratio,
                              'mastery': mastery, 'champ_url': champ_url}
                 champ_list.append(list_item)
