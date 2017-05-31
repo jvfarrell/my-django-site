@@ -16,6 +16,7 @@ champ_dict = {}
 for champion in championInfo.json()['data']:
     champ_dict[championInfo.json()['data'][champion]['id']] = championInfo.json()['data'][champion]['name']
 
+#get current lol patch version
 version_url = 'https://global.api.riotgames.com/api/lol/static-data/NA/v1.2/versions?api_key='+key
 versions = requests.get(version_url)
 version = versions.json()[0]
