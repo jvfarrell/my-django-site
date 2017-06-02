@@ -151,3 +151,4 @@ def summoner(request, sum_name):
 
         return render(request, 'summoner_lookup.html', {'summoner_name': sum_name, 'rank': textRank, 'icon_url': icon_url,
                                                         'champ_list': champ_list, 'form': form})
+#new idea would be a guess that champion by their title aka "The Barbarian King" : Tryndamere
