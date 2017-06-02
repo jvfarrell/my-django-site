@@ -10,6 +10,7 @@ import lol.api_config as config
 
 #champion info names
 key = config.api_key
+current_season = '8'
 url_champ_info = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key='+key
 championInfo = requests.get(url_champ_info)
 champ_dict = {}
@@ -89,16 +90,14 @@ def summoner(request, sum_name):
         plain_name = name.replace(' ', '')
         key = config.api_key #api key
         #name_requested_formatted = name.replace('+', '%20')
-        url = 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + plain_name + '?api_key=' + key
+        url = 'https://na1.api.riotgames.com/lol/summoner/v3/summoners/by-name/' + plain_name + '?api_key=' + key
         response = requests.get(url)
         data = response.json()
 
         # get Summoner ID and name
-        sumName = ''
-        for name in data:
-            sumName = name
-        sumID = data[sumName]['id']
-        icon_id = data[sumName]['profileIconId']
+        sumID = data['id']
+        account_id = str(data['accountId'])
+        icon_id = data['profileIconId']
         sumID = str(sumID)
         icon_url = 'http://ddragon.leagueoflegends.com/cdn/'+version+'/img/profileicon/'+str(icon_id)+'.png'
 
@@ -149,6 +148,45 @@ def summoner(request, sum_name):
                              'mastery': mastery, 'champ_url': champ_url}
                 champ_list.append(list_item)
 
+        #get role pref
+        matchlist_url = 'https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/'+account_id+'?season='+current_season+'&api_key='+key
+        matchlist_data = requests.get(matchlist_url)
+        matchlist = matchlist_data.json()['matches']
+        num_matches = len(matchlist)
+        top = 0
+        jungle = 0
+        mid = 0
+        bot = 0
+        support = 0
+        for match in matchlist:
+            if match['lane'] == 'BOTTOM' or match['lane'] == 'BOT':
+                if match['role'] == 'DUO_SUPPORT':
+                    support += 1
+                else:
+                    bot += 1
+            elif match['lane'] == 'MID' or match['lane'] == 'MIDDLE':
+                mid += 1
+            elif match['lane'] == 'JUNGLE':
+                jungle += 1
+            elif match['lane'] == 'TOP':
+                top += 1
+        role_count_list = {'Top': top, 'Jungle': jungle, 'Mid': mid, 'ADC': bot, 'Support': support}
+        most = 0
+        second = 0
+        main_role = 'None'
+        secondary_role = 'None'
+        for role in role_count_list:
+            if role_count_list[role] > most:
+                secondary_role = main_role
+                second = most
+                main_role = role
+                most = role_count_list[role]
+            elif role_count_list[role] > second:
+                secondary_role = role
+                second = role_count_list[role]
+
         return render(request, 'summoner_lookup.html', {'summoner_name': sum_name, 'rank': textRank, 'icon_url': icon_url,
-                                                        'champ_list': champ_list, 'form': form})
+                                                        'champ_list': champ_list, 'main_role': main_role,
+                                                        'secondary_role':secondary_role, 'form': form})
+
 #new idea would be a guess that champion by their title aka "The Barbarian King" : Tryndamere

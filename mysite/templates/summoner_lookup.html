@@ -22,6 +22,27 @@
 {% endblock %}
 {% block title %}Summoner Lookup{% endblock %}
 {% block header %}
+<style>
+.loader {
+  border: 8px solid #4d94ff;
+  border-radius: 50%;
+  border-top: 8px solid #ff9900;
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
 <header class="w3-container w3-light-gray w3-center" style="padding:60px 16px">
 
     <script type="text/javascript">
@@ -39,25 +60,11 @@
             {% csrf_token %}
         </form>
     </center>
-        <div class="w3-container">
-          <div class="w3-light-gray">
-            <div id="myBar" class="w3-orange" style="height:24px;width:0"></div>
-          </div>
-          <br>
-        </div>
+    <br>
+    <center><div id="loading_wheel" class="loader" style="display:none"></div></center>
     <script>
     function move() {
-      var elem = document.getElementById("myBar");
-      var width = 1;
-      var id = setInterval(frame, 30);
-      function frame() {
-        if (width >= 100) {
-          clearInterval(id);
-        } else {
-          width++;
-          elem.style.width = width + '%';
-        }
-      }
+      document.getElementById("loading_wheel").style.display = "block";
     }
     </script>
 
@@ -65,8 +72,10 @@
 
         <div class="w3-col" style="width:16%">
             <img src="{{ icon_url }}" alt="Summoner Icon">
-        <h2>{{ summoner_name }}</h2>
-        <p>{{ rank }}</p>
+            <h2>{{ summoner_name }}</h2>
+            <p>{{ rank }}</p>
+            <p>Role Pref: {{main_role}}, {{secondary_role}}</p>
+            <!--add roles here -->
         </div>
 
         {% if champ_list %}
