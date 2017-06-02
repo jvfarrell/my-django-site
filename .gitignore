@@ -1,5 +1,6 @@
 #ignore api config file that will contain your api key
 api_config.py
+.idea/
 
 # Default Python gitignore below this line -------------------------
 
