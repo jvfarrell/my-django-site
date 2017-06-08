@@ -23,6 +23,15 @@
 {% block title %}Summoner Lookup{% endblock %}
 {% block header %}
 <style>
+.champ-level {
+    position: relative;
+    left: 80%;
+    top: -40%;
+    z-index: 0;
+}
+.champ-icon {
+    z-index: -2;
+}
 .loader {
   border: 8px solid #4d94ff;
   border-radius: 50%;
@@ -41,6 +50,13 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+#icon-border {
+    border: 22px solid transparent;
+    padding: 0px;
+    -webkit-border-image: url(/static/rank_border/{{highestAchievedSeasonTier}}-banner2.png) 30 stretch; /* Safari 3.1-5 */
+    -o-border-image: url(/static/rank_border/{{highestAchievedSeasonTier}}-banner2.png) 30 stretch; /* Opera 11-12.1 */
+    border-image: url(/static/rank_border/{{highestAchievedSeasonTier}}-banner2.png) 30 stretch;
 }
 </style>
 <header class="w3-container w3-light-gray w3-center" style="padding:60px 16px">
@@ -71,29 +87,30 @@
     <div class="w3-row-padding w3-padding-48 w3-theme-l1">
 
         <div class="w3-col" style="width:16%">
-            <img src="{{ icon_url }}" alt="Summoner Icon">
+            <img id="icon-border" src="{{ icon_url }}" alt="Summoner Icon">
             <h2>{{ summoner_name }}</h2>
             <p>{{ rank }}</p>
-            <p>Role Pref: {{main_role}}, {{secondary_role}}</p>
-            <!--add roles here -->
+            <!--<p>Role Pref: {{main_role}}, {{secondary_role}}</p>-->
+            <p>Win Ratio: {{total_win_ratio}}</p>
         </div>
 
         {% if champ_list %}
                 {% for champ in champ_list %}
         <div class="w3-col" style="width:16%">
-        <div class="w3-card-2 w3-white">
-          <img src="{{champ.champ_url}}" alt="{{ champ.name }} Icon" style="width:100%">
-            {% if champ.mastery > 4 %}
+        <div class="w3-card-2 w3-white" style="text-align: left;">
             <div>
-                <img border="0" src="/static/champMastery/lvl{{ champ.mastery }}-Flag2.png"
+                <img class='champ-icon' src="{{champ.champ_url}}" alt="{{ champ.name }} Icon" style="width:100%">
+            {% if champ.mastery > 4 %}
+
+                <img class="champ-level" border="0" style="width:20%" src="/static/champMastery/lvl{{ champ.mastery }}-Flag2.png"
                  alt="level {{ champ.mastery }}">
             </div>
             {% endif %}
           <div class="w3-container">
           <h3>{{ champ.name }}</h3>
-              <p>KDA : {{ champ.kda }}</p>
-              <p>Win Ratio: {{ champ.win_ratio }}</p>
               <p>Games Played: {{ champ.games_played }} </p>
+              <p>Win Ratio: {{ champ.win_ratio }}</p>
+              <p>KDA : {{ champ.kda }}</p>
               <p>Mastery Lvl: {{ champ.mastery }}</p>
           </div>
           </div>
@@ -105,5 +122,11 @@
 
     </div>
 </header>
-
+{% endblock %}
+{% block content %}
+<center>
+    <p style="opacity:0.5; padding-right:20%; padding-left:20%">This site isn’t endorsed by Riot Games and doesn’t reflect the views or opinions of Riot Games or anyone
+    officially involved in producing or managing League of Legends. League of Legends and Riot Games
+    are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
+</center>
 {% endblock %}

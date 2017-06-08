@@ -132,6 +132,10 @@ def summoner(request, sum_name):
                 'winRatio'] = df_personal_champ_ranked_stats.totalSessionsWon / df_personal_champ_ranked_stats.totalSessionsPlayed
             df_personal_champ_ranked_stats = df_personal_champ_ranked_stats.T
 
+            #get total win ratio
+            total_win_ratio = sum(df_personal_champ_ranked_stats.T['totalSessionsWon'])/sum(df_personal_champ_ranked_stats.T['totalSessionsPlayed'])
+            total_win_ratio = '{percent:.2%}'.format(percent=total_win_ratio)
+
             # get top ranked champs
             top_champs = df_personal_champ_ranked_stats.T.sort_values(by='totalSessionsPlayed', ascending=False)[0:5]
 
@@ -148,45 +152,59 @@ def summoner(request, sum_name):
                              'mastery': mastery, 'champ_url': champ_url}
                 champ_list.append(list_item)
 
-        #get role pref
-        matchlist_url = 'https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/'+account_id+'?season='+current_season+'&api_key='+key
-        matchlist_data = requests.get(matchlist_url)
-        matchlist = matchlist_data.json()['matches']
-        num_matches = len(matchlist)
-        top = 0
-        jungle = 0
-        mid = 0
-        bot = 0
-        support = 0
-        for match in matchlist:
-            if match['lane'] == 'BOTTOM' or match['lane'] == 'BOT':
-                if match['role'] == 'DUO_SUPPORT':
-                    support += 1
-                else:
-                    bot += 1
-            elif match['lane'] == 'MID' or match['lane'] == 'MIDDLE':
-                mid += 1
-            elif match['lane'] == 'JUNGLE':
-                jungle += 1
-            elif match['lane'] == 'TOP':
-                top += 1
-        role_count_list = {'Top': top, 'Jungle': jungle, 'Mid': mid, 'ADC': bot, 'Support': support}
-        most = 0
-        second = 0
+        # get highestAchievedSeasonTier
+        highestAchievedSeasonTier = 'unranked'
+        recent_games_url = 'https://na.api.riotgames.com/api/lol/NA/v1.3/game/by-summoner/' + sumID + '/recent?api_key=' + key
+        recent_games = requests.get(recent_games_url).json()
+        r_champ_id = recent_games['games'][0]['championId']
+        r_match_id = recent_games['games'][0]['gameId']
+        r_game_url = 'https://na1.api.riotgames.com/lol/match/v3/matches/' + str(r_match_id) + '?api_key=' + key
+        r_game = requests.get(r_game_url).json()
+        for p in r_game['participants']:
+            if p['championId'] == r_champ_id:
+                highestAchievedSeasonTier = p['highestAchievedSeasonTier']
+        highestAchievedSeasonTier = highestAchievedSeasonTier.lower()
+
+        # #get role pref
+        # matchlist_url = 'https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/'+account_id+'?season='+current_season+'&api_key='+key
+        # matchlist_data = requests.get(matchlist_url)
+        # matchlist = matchlist_data.json()['matches']
+        # num_matches = len(matchlist)
+        # top = 0
+        # jungle = 0
+        # mid = 0
+        # bot = 0
+        # support = 0
+        # for match in matchlist:
+        #     if match['lane'] == 'BOTTOM' or match['lane'] == 'BOT':
+        #         if match['role'] == 'DUO_SUPPORT':
+        #             support += 1
+        #         else:
+        #             bot += 1
+        #     elif match['lane'] == 'MID' or match['lane'] == 'MIDDLE':
+        #         mid += 1
+        #     elif match['lane'] == 'JUNGLE':
+        #         jungle += 1
+        #     elif match['lane'] == 'TOP':
+        #         top += 1
+        # role_count_list = {'Top': top, 'Jungle': jungle, 'Mid': mid, 'ADC': bot, 'Support': support}
+        # most = 0
+        # second = 0
         main_role = 'None'
         secondary_role = 'None'
-        for role in role_count_list:
-            if role_count_list[role] > most:
-                secondary_role = main_role
-                second = most
-                main_role = role
-                most = role_count_list[role]
-            elif role_count_list[role] > second:
-                secondary_role = role
-                second = role_count_list[role]
+        # for role in role_count_list:
+        #     if role_count_list[role] > most:
+        #         secondary_role = main_role
+        #         second = most
+        #         main_role = role
+        #         most = role_count_list[role]
+        #     elif role_count_list[role] > second:
+        #         secondary_role = role
+        #         second = role_count_list[role]
 
         return render(request, 'summoner_lookup.html', {'summoner_name': sum_name, 'rank': textRank, 'icon_url': icon_url,
                                                         'champ_list': champ_list, 'main_role': main_role,
-                                                        'secondary_role':secondary_role, 'form': form})
+                                                        'secondary_role':secondary_role, 'total_win_ratio':total_win_ratio,
+                                                        'highestAchievedSeasonTier':highestAchievedSeasonTier, 'form': form})
 
 #new idea would be a guess that champion by their title aka "The Barbarian King" : Tryndamere
