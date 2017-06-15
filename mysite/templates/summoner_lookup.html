@@ -58,6 +58,21 @@
     -o-border-image: url(/static/rank_border/{{highestAchievedSeasonTier}}.png) 30 stretch; /* Opera 11-12.1 */
     border-image: url(/static/rank_border/{{highestAchievedSeasonTier}}.png) 30 stretch;
 }
+.ProfileImage {
+    display: block;
+    width: 100px;
+    height: 100px;
+    border: 0;
+}
+.borderImage {
+    position: absolute;
+    left: 31px;
+    top: 148px;
+    width: 120px;
+    height: 120px;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+}
 </style>
 <header class="w3-container w3-light-gray w3-center" style="padding:60px 16px">
 
@@ -86,40 +101,79 @@
 
     <div class="w3-row-padding w3-padding-48 w3-theme-l1">
 
-        <div class="w3-col" style="width:16%">
-            <img id="icon-border" src="{{ icon_url }}" alt="Summoner Icon">
-            <h2>{{ summoner_name }}</h2>
-            <p>{{ rank }}</p>
-            <!--<p>Role Pref: {{main_role}}, {{secondary_role}}</p>-->
-            <p>Win Ratio: {{total_win_ratio}}</p>
-        </div>
+        <!--<div class="w3-row">
+          <div class="w3-col w3-container m2 w3-red"><p>Red</p>
+            <div class="borderImage" style="background-image: url(/static/rank_border/{{highestAchievedSeasonTier}}.png);"></div>
+                <img src="{{icon_url}}" class="ProfileImage" alt="Summoner Icon">
+                <!--<img id="icon-border" src="{{ icon_url }}" alt="Summoner Icon">-->
+                <!--<h2>{{ summoner_name }}</h2>
+                <p>{{ rank }}</p>
+                <!--<p>Role Pref: {{main_role}}, {{secondary_role}}</p>-->
+                <!--<p>Win Ratio: {{total_win_ratio}}</p>
+          </div>
+            {% if champ_list %}
+                    {% for champ in champ_list %}
+          <div class="w3-col w3-container m2 w3-card w3-white">
+              <div>
+                    <img class='champ-icon' src="{{champ.champ_url}}" alt="{{ champ.name }} Icon" style="width:100%">
+                {% if champ.mastery > 4 %}
 
-        {% if champ_list %}
-                {% for champ in champ_list %}
-        <div class="w3-col" style="width:16%">
-        <div class="w3-card-2 w3-white" style="text-align: left;">
-            <div>
-                <img class='champ-icon' src="{{champ.champ_url}}" alt="{{ champ.name }} Icon" style="width:100%">
-            {% if champ.mastery > 4 %}
+                    <img class="champ-level" border="0" style="width:20%" src="/static/champMastery/lvl{{ champ.mastery }}-Flag2.png"
+                     alt="level {{ champ.mastery }}">
+                </div>
+                {% endif %}
+              <div class="w3-container">
+              <h3>{{ champ.name }}</h3>
+                  <p>Games Played: {{ champ.games_played }} </p>
+                  <p>Win Ratio: {{ champ.win_ratio }}</p>
+                  <p>KDA : {{ champ.kda }}</p>
+                  <p>Mastery Lvl: {{ champ.mastery }}</p>
+              </div>
 
-                <img class="champ-level" border="0" style="width:20%" src="/static/champMastery/lvl{{ champ.mastery }}-Flag2.png"
-                 alt="level {{ champ.mastery }}">
-            </div>
+          </div>
+            {% endfor %}
+            {% else %}
+                There are no ranked games for this summoner.
             {% endif %}
-          <div class="w3-container">
-          <h3>{{ champ.name }}</h3>
-              <p>Games Played: {{ champ.games_played }} </p>
-              <p>Win Ratio: {{ champ.win_ratio }}</p>
-              <p>KDA : {{ champ.kda }}</p>
-              <p>Mastery Lvl: {{ champ.mastery }}</p>
-          </div>
-          </div>
-        </div>
-                {% endfor %}
-        {% else %}
-            There are no ranked games for this summoner.
-        {% endif %}
+        </div> -->
 
+        <div class="w3-row">
+            <div class="w3-col w3-container m2" style="width:16%; text-align:left;">
+                <div class="borderImage" style="background-image: url(/static/rank_border/{{highestAchievedSeasonTier}}.png);"></div>
+                <img src="{{icon_url}}" class="ProfileImage" alt="Summoner Icon">
+                <!--<img id="icon-border" src="{{ icon_url }}" alt="Summoner Icon">-->
+                <h2>{{ summoner_name }}</h2>
+                <p>{{ rank }}</p>
+                <!--<p>Role Pref: {{main_role}}, {{secondary_role}}</p>-->
+                <p>Win Ratio: {{total_win_ratio}}</p>
+            </div>
+
+            {% if champ_list %}
+                    {% for champ in champ_list %}
+            <div class="w3-col w3-container m2" style="width:16%;">
+                <div class="w3-card-2 w3-white" style="text-align: left;">
+                        <div>
+                            <img class='champ-icon' src="{{champ.champ_url}}" alt="{{ champ.name }} Icon" style="width:100%">
+                        {% if champ.mastery > 4 %}
+
+                            <img class="champ-level" border="0" style="width:20%" src="/static/champMastery/lvl{{ champ.mastery }}-Flag2.png"
+                             alt="level {{ champ.mastery }}">
+                        </div>
+                        {% endif %}
+                      <div class="w3-container">
+                      <h3>{{ champ.name }}</h3>
+                          <p>Games Played: {{ champ.games_played }} </p>
+                          <p>Win Ratio: {{ champ.win_ratio }}</p>
+                          <p>KDA : {{ champ.kda }}</p>
+                          <p>Mastery Lvl: {{ champ.mastery }}</p>
+                      </div>
+                </div>
+            </div>
+                    {% endfor %}
+            {% else %}
+                There are no ranked games for this summoner.
+            {% endif %}
+        </div>
     </div>
 </header>
 {% endblock %}

@@ -52,6 +52,10 @@ def display_meta(request):
     return HttpResponse('<table>%s</table>' % '\n'.join(html))
 
 
+def videos_page(request):
+    return render(request, 'youtube_links.html')
+
+
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)

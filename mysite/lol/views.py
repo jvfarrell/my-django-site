@@ -8,27 +8,50 @@ import lol.api_config as config
 
 # Set up code
 
-#champion info names
 key = config.api_key
 current_season = '8'
-url_champ_info = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key='+key
-championInfo = requests.get(url_champ_info)
-champ_dict = {}
-for champion in championInfo.json()['data']:
-    champ_dict[championInfo.json()['data'][champion]['id']] = championInfo.json()['data'][champion]['name']
 
-#get current lol patch version
-version_url = 'https://global.api.riotgames.com/api/lol/static-data/NA/v1.2/versions?api_key='+key
-versions = requests.get(version_url)
-version = versions.json()[0]
 
-def getChampSimpleName(champID):
-    return champ_dict[champID].lower().replace(' ', '').replace('\'', '').replace('.','')
+def check_api_status():
+    lol_status_url = 'https://na.api.riotgames.com/lol/status/v1/shard?api_key='+key
+    lol_status = requests.get(lol_status_url)
+    if lol_status.status_code == 200:
+        return True
+    else:
+        return False
 
-champ_ids = {}
-for champ_id in champ_dict:
-    s = getChampSimpleName(champ_id)
-    champ_ids[s] = champ_id
+riot_api_working = check_api_status()
+if riot_api_working:
+    #champion info/names
+    url_champ_info = 'https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=' + key
+    championInfo = requests.get(url_champ_info)
+
+    champ_dict = {}
+    for champion in championInfo.json()['data']:
+        champ_dict[championInfo.json()['data'][champion]['id']] = championInfo.json()['data'][champion]['name']
+
+    # get current lol patch version
+    version_url = 'https://global.api.riotgames.com/api/lol/static-data/NA/v1.2/versions?api_key=' + key
+    versions = requests.get(version_url)
+    if versions.status_code == 200:
+        version = versions.json()[0]
+    else:
+        version = 7.11  # manual
+
+    def getChampSimpleName(champID):
+        return champ_dict[champID].lower().replace(' ', '').replace('\'', '').replace('.', '')
+
+    champ_ids = {}
+    for champ_id in champ_dict:
+        s = getChampSimpleName(champ_id)
+        champ_ids[s] = champ_id
+
+
+def error(request):
+    if riot_api_working:
+        return render(request, 'error.html', {'from': 'Summoner Lookup'})
+    else:
+        return render(request, 'error.html', {'from': 'Riot API'})
 
 
 def getSummonerChampLevel(tempChampID, summID):
@@ -71,6 +94,8 @@ def summoner_landing(request):
             return HttpResponseRedirect('/summoner/'+name)
     else:
         form = SummonerForm()
+        if riot_api_working is False:
+            return render(request, 'error.html', {'from': 'Riot API'})
         return render(request, 'summoner_landing_page.html', {'form': form})
 
 
@@ -83,6 +108,9 @@ def summoner(request, sum_name):
 
             return HttpResponseRedirect('/summoner/'+name)
     else:
+        if riot_api_working is False:
+            return render(request, 'error.html', {'from': 'Riot API'})
+
         name = str(sum_name)
         form = SummonerForm(
             initial={'summoner_name': name}
@@ -144,7 +172,7 @@ def summoner(request, sum_name):
             for c in top_champs.T:
                 name = champ_dict[c]
                 games_played = top_champs.T[c].totalSessionsPlayed
-                kda = top_champs.T[c].KDA
+                kda = '{:.3f}'.format(top_champs.T[c].KDA)
                 win_ratio = '{percent:.1%}'.format(percent=top_champs.T[c].winRatio)
                 mastery = getSummonerChampLevel(c, sumID)
                 champ_url = 'http://ddragon.leagueoflegends.com/cdn/'+version+'/img/champion/'+name+'.png'

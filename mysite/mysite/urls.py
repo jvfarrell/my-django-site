@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from mysite.views import hello, my_homepage_view, current_datetime, hours_ahead, display_meta, contact, resume, home, nfl_analytics
+from mysite.views import hello, my_homepage_view, current_datetime, hours_ahead, display_meta, contact, resume, home, nfl_analytics, videos_page
 from books import views
-from lol import views as lolview
+import lol.views as lolview
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -35,4 +35,6 @@ urlpatterns = [
     url(r'^summoner/(.*)/$', lolview.summoner),
     url(r'^summoner/$', lolview.summoner_landing),
     url(r'^contact/$', contact),
+    url(r'^error/$', lolview.error),
+    url(r'^videos/$', videos_page),
 ]

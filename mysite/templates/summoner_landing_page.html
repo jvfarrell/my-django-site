@@ -58,6 +58,11 @@
             <label for="summoner_name">Summoner Name:</label>
             {{ form.summoner_name }}
             <input type="submit" value="Submit" onclick="move()"/>
+            <select class="w3-select" name="option" style="width:50px">
+              <option value="1">NA</option>
+              <option value="2">Needs</option>
+              <option value="3">Implementation</option>
+            </select>
             {% csrf_token %}
         </form>
     </center>
