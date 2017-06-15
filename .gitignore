@@ -1,6 +1,12 @@
 #ignore api config file that will contain your api key
 api_config.py
 .idea/
+config.py
+env_mysite
+*.pyc
+staticfiles
+.env
+db.sqlite3
 
 # Default Python gitignore below this line -------------------------
 

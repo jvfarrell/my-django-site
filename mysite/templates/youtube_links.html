@@ -1,0 +1,45 @@
+{% extends "base_site.html" %}
+
+{% block title %}My Videos{% endblock %}
+{% block navbar %}
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-blue w3-card-2 w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-blue" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="/home/" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Home</a>
+    <a href="/resume/" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Resume</a>
+    <a href="/summoner/" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Summoner Lookup</a>
+    <a href="/home/#quote" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Quote Generator</a>
+    <a href="/videos/" class="w3-bar-item w3-button w3-padding-large w3-white">My Videos</a>
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="/resume/" class="w3-bar-item w3-button w3-padding-large">Resume</a>
+    <a href="/summoner/" class="w3-bar-item w3-button w3-padding-large">Summoner Lookup</a>
+    <a href="/home/#quote" class="w3-bar-item w3-button w3-padding-large">Quote Generator</a>
+    <a href="/videos/" class="w3-bar-item w3-button w3-padding-large">My Videos</a>
+  </div>
+</div>
+{% endblock %}
+{% block header %}
+
+<header class="w3-container w3-gray w3-center" style="padding:128px 16px">
+  <h1 class="w3-margin w3-jumbo">Some of my passions:
+  </h1>
+  <p class="w3-xlarge">League of Legends & Hip Hop Dance</p>
+    <!-- Video Grid -->
+  <div class="w3-row">
+    <div class="w3-half">
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/QLjj6eHv-JA" frameborder="0" allowfullscreen></iframe>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/sQkS5NIyI3o" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="w3-half">
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/grlwhcvk2XQ" frameborder="0" allowfullscreen></iframe>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/HE-lngxWv8E" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+</header>
+
+{% endblock %}
