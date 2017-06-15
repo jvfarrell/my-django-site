@@ -1,0 +1,8 @@
+{
+  "name": "Victor Farrell: Developer",
+  "description": "This is my personal site where I will post my projects that I work on.",
+  "image": "heroku/python",
+  "repository": "https://github.com/jvfarrell/my-django-site",
+  "keywords": ["python", "django" ],
+  "addons": [ "heroku-postgresql" ]
+}
