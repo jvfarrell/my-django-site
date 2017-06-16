@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-import mysite.config as config
+#import mysite.config as config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config.SECRET_KEY
+SECRET_KEY = 'snpixx_c+6rd2xy1j#o4x@+db*$i%vo^o@&-s0fsrxneqlqrux'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
